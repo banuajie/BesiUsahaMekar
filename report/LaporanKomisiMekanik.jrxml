@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LaporanKomisiMekanik" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TglAwal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TglAkhir" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT distinct
+        ttempkomisimekanik.No_Transaksi as notrans,
+        ttempkomisimekanik.Tanggal as tanggal,
+        ttempkomisimekanik.Komisi as komisimeka,
+        ttempkomisimekanik.ID_Mekanik as idmeka,
+        tmekanik.Nama as namameka
+
+FROM ttempkomisimekanik
+INNER JOIN tmekanik ON ttempkomisimekanik.ID_Mekanik = tmekanik.ID_Mekanik
+WHERE  ttempkomisimekanik.Tanggal>=$P{TglAwal} and   ttempkomisimekanik.Tanggal<=$P{TglAkhir}]]>
+	</queryString>
+	<field name="notrans" class="java.lang.String"/>
+	<field name="tanggal" class="java.sql.Date"/>
+	<field name="komisimeka" class="java.lang.Integer"/>
+	<field name="idmeka" class="java.lang.String"/>
+	<field name="namameka" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="67">
+			<staticText>
+				<reportElement mode="Transparent" x="304" y="15" width="251" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN BIAYA SERVIS MEKANIK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="17" y="35" width="220" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Jalan Sarimanah II No. 95 Sarijadi, Bandung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="17" y="15" width="220" height="40"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[T.B. BESI USAHA MEKAR]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="54">
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{TglAwal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement mode="Transparent" x="148" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{TglAkhir}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="29" y="31" width="113" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Transaksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="143" y="31" width="125" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="454" y="32" width="101" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Biaya Jasa]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Opaque" x="0" y="28" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="268" y="31" width="100" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Mekanik]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="31" width="30" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Opaque" x="2" y="51" width="555" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21">
+			<textField>
+				<reportElement mode="Transparent" x="268" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{namameka}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="29" y="1" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{notrans}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement mode="Transparent" x="142" y="1" width="125" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{tanggal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0">
+				<reportElement mode="Transparent" x="454" y="1" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{komisimeka}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="2" y="1" width="27" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="91">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="78" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Halaman "+$V{PAGE_NUMBER}+" Dari"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement mode="Transparent" x="0" y="78" width="100" height="13"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="78" width="34" height="13" backcolor="#E6E6E6"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

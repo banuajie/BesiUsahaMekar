@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LaporanServisDetail2" language="groovy" pageWidth="671" pageHeight="842" columnWidth="631" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TglAwal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TglAkhir" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Banuajie\\====KUMPULAN APLIKASI NETBEANS====\\BesiUsahaMekar\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+        ttransaksiservis.No_Transaksi as notrans,
+        ttransaksiservis.Tanggal as tanggal,
+
+        ttemptransaksiservisjual.Kode_Item as kodeitem,
+        ttemptransaksiservisjual.Nama_Item as namaitem,
+        ttemptransaksiservisjual.Jml_Item as jmlitem,
+        ttemptransaksiservisjual.Harga_Item as hargaitem,
+        ttemptransaksiservisjual.Total_Item as totalitem
+FROM ttransaksiservis
+INNER JOIN ttemptransaksiservisjual ON  ttransaksiservis.No_Transaksi = ttemptransaksiservisjual.No_Transaksi WHERE ttransaksiservis.Tanggal>=$P{TglAwal} and  ttransaksiservis.Tanggal<=$P{TglAkhir}]]>
+	</queryString>
+	<field name="notrans" class="java.lang.String"/>
+	<field name="tanggal" class="java.sql.Date"/>
+	<field name="kodeitem" class="java.lang.String"/>
+	<field name="namaitem" class="java.lang.String"/>
+	<field name="jmlitem" class="java.lang.String"/>
+	<field name="hargaitem" class="java.lang.String"/>
+	<field name="totalitem" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="79">
+			<textField>
+				<reportElement mode="Transparent" x="47" y="59" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{TglAwal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="186" y="59" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{TglAkhir}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="81">
+			<subreport>
+				<reportElement mode="Transparent" x="0" y="15" width="200" height="66"/>
+				<subreportParameter name="notrans">
+					<subreportParameterExpression><![CDATA[$F{notrans}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "LapServisSub.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{notrans}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

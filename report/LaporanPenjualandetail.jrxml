@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BuktiPembelian" language="groovy" pageWidth="697" pageHeight="805" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="657" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TglAwal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TglAkhir" class="java.util.Date">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Banuajie\\====KUMPULAN APLIKASI NETBEANS====\\BesiUsahaMekar\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+        ttransaksijual.No_Transaksi as notrans,
+        ttransaksijual.Tanggal as tgl,
+        ttransaksijual.No_Pesanan as nopesan,
+        ttransaksijual.ID_Konsumen as konsumen,
+        tkonsumen.Nama as namakonsumen,
+        ttransaksijual.Jml_Item as jmlitem,
+        ttransaksijual.Total_Transaksi as totaltrans,
+        ttransaksijual.Jml_Bayar as jmlbayar,
+        ttransaksijual.Sisa_Bayar as sisabayar
+
+FROM ttransaksijual
+INNER JOIN tkonsumen ON tkonsumen.ID_Konsumen = ttransaksijual.ID_Konsumen
+WHERE ttransaksijual.Tanggal>=$P{TglAwal} and  ttransaksijual.Tanggal<=$P{TglAkhir}]]>
+	</queryString>
+	<field name="notrans" class="java.lang.String"/>
+	<field name="tgl" class="java.sql.Date"/>
+	<field name="nopesan" class="java.lang.String"/>
+	<field name="konsumen" class="java.lang.String"/>
+	<field name="namakonsumen" class="java.lang.String"/>
+	<field name="jmlitem" class="java.lang.Integer"/>
+	<field name="totaltrans" class="java.lang.Integer"/>
+	<field name="jmlbayar" class="java.lang.Integer"/>
+	<field name="sisabayar" class="java.lang.Integer"/>
+	<variable name="variable1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{jmlitem}]]></variableExpression>
+	</variable>
+	<variable name="variable2" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{totaltrans}]]></variableExpression>
+	</variable>
+	<variable name="variable3" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{jmlbayar}]]></variableExpression>
+	</variable>
+	<variable name="variable4" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{sisabayar}]]></variableExpression>
+	</variable>
+	<group name="groupkolom">
+		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupFooter>
+			<band height="113">
+				<staticText>
+					<reportElement mode="Transparent" x="154" y="0" width="123" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Keseluruhan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="473" y="13" width="26" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="473" y="33" width="26" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="382" y="73" width="91" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sisa Bayar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="382" y="53" width="91" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Bayar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="473" y="73" width="26" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="382" y="13" width="91" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Jml Item]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="473" y="53" width="26" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="382" y="33" width="91" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Beli]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="692" y="-29" width="2" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{jmlitem}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="716" y="-29" width="7" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totaltrans}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="736" y="-29" width="8" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{jmlbayar}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="754" y="-29" width="10" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{sisabayar}]]></textFieldExpression>
+				</textField>
+				<textField pattern="">
+					<reportElement mode="Transparent" x="503" y="13" width="100" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{variable1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="Rp #,##0">
+					<reportElement mode="Transparent" x="503" y="33" width="100" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{variable2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="Rp #,##0">
+					<reportElement mode="Transparent" x="503" y="53" width="100" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{variable3}]]></textFieldExpression>
+				</textField>
+				<textField pattern="Rp #,##0">
+					<reportElement mode="Transparent" x="504" y="73" width="100" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{variable4}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="groupdetail">
+		<groupExpression><![CDATA[$V{COLUMN_COUNT}]]></groupExpression>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="71">
+			<image>
+				<reportElement x="5" y="5" width="330" height="65"/>
+				<imageExpression class="java.lang.String"><![CDATA["D:\\Skripsi Nugraha Banu Ajie\\LOGO BESI USAHA MEKAR.PNG"]]></imageExpression>
+			</image>
+                        
+			<staticText>
+				<reportElement mode="Transparent" x="382" y="15" width="251" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN  PENJUALAN (Detail)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<detail>
+		<band height="68">
+			<textField pattern="">
+				<reportElement mode="Transparent" x="68" y="39" width="139" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{notrans}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement mode="Transparent" x="207" y="39" width="84" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tgl}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="291" y="39" width="118" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nopesan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="36" y="40" width="32" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="408" y="40" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{namakonsumen}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement mode="Transparent" x="85" y="40" width="457" height="27"/>
+				<subreportParameter name="notrans">
+					<subreportParameterExpression><![CDATA[$F{notrans}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "LabPenjualanSub.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement mode="Transparent" x="68" y="10" width="139" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Transaksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="409" y="10" width="101" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Konsumen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="36" y="10" width="32" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Transaksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="207" y="9" width="84" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="291" y="9" width="118" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Pesanan]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Opaque" x="0" y="28" width="657" height="1"/>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="0" y="7" width="657" height="1"/>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="0" y="0" width="657" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

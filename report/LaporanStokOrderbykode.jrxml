@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LaporanServis" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="kode" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+        tstokbarang.No_Transaksi as notrans,
+        tstokbarang.Kode_item as kodeitem,
+        tmaterial.Nama_Item as namaitem,
+        tstokbarang.Stok_Masuk as masuk,
+        tstokbarang.Stok_Keluar as keluar,
+        tstokbarang.Stok_Akhir as stok,
+        tstokbarang.Tanggal as tanggal
+
+FROM tstokbarang
+INNER JOIN tmaterial ON tstokbarang.Kode_Item = tmaterial.Kode_Item
+WHERE tstokbarang.Kode_item=$P{kode}
+
+ORDER BY tstokbarang.Tanggal]]>
+	</queryString>
+	<field name="notrans" class="java.lang.String"/>
+	<field name="kodeitem" class="java.lang.String"/>
+	<field name="namaitem" class="java.lang.String"/>
+	<field name="masuk" class="java.lang.Integer"/>
+	<field name="keluar" class="java.lang.Integer"/>
+	<field name="stok" class="java.lang.String"/>
+	<field name="tanggal" class="java.util.Date"/>
+	<variable name="masuk" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{masuk}]]></variableExpression>
+	</variable>
+	<variable name="keluar" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{keluar}]]></variableExpression>
+	</variable>
+	<group name="kolom">
+		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupHeader>
+			<band height="70">
+				<staticText>
+					<reportElement mode="Transparent" x="31" y="47" width="113" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No Transaksi]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="145" y="47" width="109" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tanggal]]></text>
+				</staticText>
+				<line>
+					<reportElement mode="Opaque" x="2" y="44" width="555" height="1"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="353" y="48" width="100" height="20"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Masuk]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="455" y="48" width="100" height="20"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Keluar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="253" y="48" width="100" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Kode Material]]></text>
+				</staticText>
+				<line>
+					<reportElement mode="Opaque" x="2" y="67" width="555" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="53">
+				<staticText>
+					<reportElement mode="Transparent" x="355" y="10" width="100" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Stok Masuk]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="355" y="30" width="100" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Stok Keluar]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="457" y="10" width="100" height="20"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{masuk}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="457" y="30" width="100" height="20"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{keluar}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement mode="Opaque" x="354" y="7" width="201" height="1"/>
+					<graphicElement>
+						<pen lineStyle="Dashed"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="67">
+			<staticText>
+				<reportElement mode="Transparent" x="264" y="15" width="270" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN STOK BERDASARKAN KODE]]></text>
+			</staticText>
+			<image>
+				<reportElement x="5" y="5" width="250" height="55"/>
+				<imageExpression class="java.lang.String"><![CDATA["D:\\Skripsi Nugraha Banu Ajie\\LOGO BESI USAHA MEKAR.PNG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="6"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="8"/>
+	</columnHeader>
+	<detail>
+		<band height="21">
+			<textField>
+				<reportElement mode="Transparent" x="31" y="0" width="113" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{notrans}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement mode="Transparent" x="145" y="0" width="109" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tanggal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="455" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{keluar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="353" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{masuk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="255" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{kodeitem}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="21" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Halaman "+$V{PAGE_NUMBER}+" Dari"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement mode="Transparent" x="0" y="21" width="100" height="13"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="21" width="34" height="13" backcolor="#E6E6E6"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

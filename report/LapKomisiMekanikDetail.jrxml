@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapKomisiMekanikDetail" language="groovy" pageWidth="595" pageHeight="283" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idmeka" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+        tkomisimekanik.No_Transaksi as notrans,
+        tkomisimekanik.Tanggal as tanggal,
+        tkomisimekanik.Total_Komisi as komisimeka,
+        tkomisimekanik.ID_Mekanik as idmekanik,
+        tmekanik.Nama as namameka
+
+FROM tkomisimekanik
+INNER JOIN tmekanik ON tkomisimekanik.ID_Mekanik = tmekanik.ID_Mekanik
+WHERE tkomisimekanik.ID_Mekanik = $P{idmeka}]]>
+	</queryString>
+	<field name="notrans" class="java.lang.String"/>
+	<field name="tanggal" class="java.sql.Date"/>
+	<field name="komisimeka" class="java.lang.String"/>
+	<field name="idmekanik" class="java.lang.String"/>
+	<field name="namameka" class="java.lang.String"/>
+	<group name="groupdetail">
+		<groupExpression><![CDATA[$F{notrans}]]></groupExpression>
+		<groupHeader>
+			<band height="2"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement isPrintRepeatedValues="false" mode="Transparent" x="32" y="0" width="113" height="20" printWhenGroupChanges="groupdetail"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{notrans}]]></textFieldExpression>
+				</textField>
+				<textField pattern="Rp #,##0">
+					<reportElement isPrintRepeatedValues="false" mode="Transparent" x="400" y="0" width="100" height="20" printWhenGroupChanges="groupdetail"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{komisimeka}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement isPrintRepeatedValues="false" mode="Transparent" x="0" y="0" width="32" height="20" printWhenGroupChanges="groupdetail"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd MMMMM yyyy">
+					<reportElement isPrintRepeatedValues="false" mode="Transparent" x="145" y="0" width="125" height="20" printWhenGroupChanges="groupdetail"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{tanggal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="270" y="0" width="100" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{namameka}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<detail>
+		<band/>
+	</detail>
+</jasperReport>

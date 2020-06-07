@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BuktiPembelian" language="groovy" pageWidth="697" pageHeight="805" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="657" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TglAwal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TglAkhir" class="java.util.Date">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Banuajie\\====KUMPULAN APLIKASI NETBEANS====\\BesiUsahaMekar\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+        treturbeli.No_Retur as noretur,
+        treturbeli.Tanggal as tgl,
+        treturbeli.ID_Supplier as idsup,
+        tsupplier.Nama as namasup,
+        ttempreturbeli.Jumlah as jmlretur,
+        treturbeli.ID_Supplier as idsup,
+        tmaterial.Nama_Item as namaitem,
+        tmaterial.Harga_Jual as hargajual,
+        ttempreturbeli.Kode_Item as kodeitem,
+        ttempreturbeli.Total as total
+
+FROM treturbeli
+INNER JOIN ttempreturbeli ON treturbeli.No_Retur = ttempreturbeli.No_Retur
+INNER JOIN tsupplier ON tsupplier.ID_Supplier = treturbeli.ID_Supplier
+INNER JOIN tmaterial ON ttempreturbeli.Kode_Item = tmaterial.Kode_Item
+
+WHERE treturbeli.Tanggal>=$P{TglAwal} and  treturbeli.Tanggal<=$P{TglAkhir}]]>
+	</queryString>
+	<field name="noretur" class="java.lang.String"/>
+	<field name="tgl" class="java.lang.String"/>
+	<field name="idsup" class="java.lang.String"/>
+	<field name="namasup" class="java.lang.String"/>
+	<field name="jmlretur" class="java.lang.Integer"/>
+	<field name="namaitem" class="java.lang.String"/>
+	<field name="hargajual" class="java.lang.Integer"/>
+	<field name="kodeitem" class="java.lang.String"/>
+	<field name="total" class="java.lang.Integer"/>
+	<variable name="jmlretur" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{jmlretur}]]></variableExpression>
+	</variable>
+	<variable name="subtotal" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<group name="groupkolom">
+		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupHeader>
+			<band height="3"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="113">
+				<staticText>
+					<reportElement mode="Transparent" x="196" y="4" width="123" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Keseluruhan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="506" y="4" width="26" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="415" y="4" width="91" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Jml Retur]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="506" y="24" width="26" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="415" y="24" width="91" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="532" y="4" width="100" height="20"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{jmlretur}]]></textFieldExpression>
+				</textField>
+				<textField pattern="Rp #,##0">
+					<reportElement mode="Transparent" x="532" y="24" width="100" height="20"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{subtotal}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement mode="Opaque" x="0" y="0" width="656" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="94">
+			<image>
+				<reportElement x="5" y="5" width="330" height="84"/>
+				<imageExpression class="java.lang.String"><![CDATA["D:\\Skripsi Nugraha Banu Ajie\\LOGO BESI USAHA MEKAR.PNG"]]></imageExpression>
+			</image>
+                        
+			<staticText>
+				<reportElement mode="Transparent" x="387" y="35" width="251" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN  RETUR PEMBELIAN (Detail)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28">
+			<line>
+				<reportElement mode="Opaque" x="0" y="0" width="657" height="1"/>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="0" y="21" width="657" height="1"/>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="0" y="25" width="657" height="1"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="64" y="1" width="139" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Transaksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="203" y="1" width="84" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="287" y="0" width="101" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kode Sup]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="388" y="0" width="100" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="32" y="1" width="32" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32">
+			<textField pattern="">
+				<reportElement mode="Transparent" x="63" y="0" width="139" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{noretur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="202" y="0" width="84" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tgl}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement mode="Transparent" x="286" y="0" width="101" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{idsup}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement mode="Transparent" x="387" y="0" width="100" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{namasup}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="31" y="0" width="32" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement mode="Transparent" x="74" y="5" width="443" height="27"/>
+				<subreportParameter name="notrans">
+					<subreportParameterExpression><![CDATA[$F{noretur}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "LapReturPembeliansub.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
